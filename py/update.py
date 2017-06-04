@@ -14,9 +14,9 @@ def generate_card_list():
         json.dump(
             out,
             f,
-            indent=4,
+            # indent=4,
             sort_keys=True,
-            separators=(',', ': ')
+            separators=(',', ':')
         )
     upload_s3(data_path)
 
