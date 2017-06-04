@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
 import Select from 'react-select';
+import ClipboardButton from 'react-clipboard.js';
+
 import MTG from './MTG';
 import './MTG.css';
 
@@ -98,9 +101,6 @@ class MainView extends Component {
           <p>
             the higher the percent, the more hip you are
           </p>
-          <p>
-            <a href={this.state.current.permalink}>permalink to these Commanders</a>
-          </p>
         </div>
         <div className="row Section">
           <div className="col-md-3"></div>
@@ -114,6 +114,13 @@ class MainView extends Component {
           <div className="col-md-3"></div>
         </div>
         <List display={this.state.current}/>
+        {this.state.current.cards.length > 0 &&
+          <p>
+            <ClipboardButton className="btn btn-default" data-clipboard-text={this.state.current.permalink}>
+              Copy permalink to Clipboard
+            </ClipboardButton>
+          </p>
+        }
       </div>
     )
   }
