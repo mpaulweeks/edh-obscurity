@@ -77,7 +77,7 @@ class MainView extends Component {
     return (
       <div className="container Manager">
         <div className="Title">
-          EDH OBSCURITY INDEX CALCULATOR
+          EDH Obscurity Index Calculator
         </div>
         <p>
           Created by <a target="_blank" href="https://twitter.com/mpaulweeks">@mpaulweeks</a>
@@ -91,8 +91,13 @@ class MainView extends Component {
         <p>
           Data last updated: {this.state.updated}
         </p>
-        <div className="Section Total-Index">
-          Overall Index: <span className="Index-Score">{this.state.current.index}</span>
+        <div className="Section">
+          <div className="Total-Index">
+            Overall Index: <span className="Index-Score">{this.state.current.index}</span>
+          </div>
+          <p>
+            the higher the percent, the more hip you are
+          </p>
         </div>
         <div className="row Section">
           <div className="col-md-3"></div>

@@ -11,11 +11,11 @@ MTG.Calc.calculateIndex = function(){
     percents.push(cardPercent);
     sum += cardPercent;
   });
-  return (1 - (sum / percents.length)).toFixed(2) * 100;
+  return Math.floor(100 * (1 - (sum / percents.length)));
 };
 MTG.Calc.calculateCardIndex = function(cardName){
   const percent = MTG.Data.getCount(cardName) / MTG.Data.getMaxCount();
-  return (1 - percent).toFixed(2) * 100;
+  return Math.floor(100 * (1 - percent));
 }
 
 // Stateful container of card info
@@ -87,8 +87,12 @@ MTG.ViewHelper.getCurrent = function(onRemove){
     };
     cards.push(cardDisplay);
   });
+  let index = MTG.Calc.calculateIndex();
+  if(isNaN(index)){
+    index = '??';
+  }
   return {
-    index: MTG.Calc.calculateIndex() || '??',
+    index: index,
     cards: cards.sort(MTG.ViewHelper.compareCards).reverse()
   }
 }
