@@ -1,4 +1,3 @@
-import React from 'react';
 
 const MTG = {};
 
@@ -40,6 +39,9 @@ MTG.Data.init = function(edhrecCounts){
 
   MTG.Data.addCard('Phelddagrif');
   MTG.Data.addCard('Dragonlord Silumgar');
+}
+MTG.Data.getAllCards = function(){
+  return Object.keys(MTG.Data.Counts);
 }
 MTG.Data.getCount = function(cardName){
   return MTG.Data.Counts[cardName];

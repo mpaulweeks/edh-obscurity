@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Select2 from 'react-select2-wrapper';
 import MTG from './MTG';
 import './MTG.css';
 
@@ -19,16 +20,11 @@ const Card = function(props){
   )
 }
 
-class Manager extends Component {
+class List extends Component {
   render() {
     const display = MTG.ViewHelper.getCurrent();
     return (
-      <div className="Manager">
-        <div className="Title">
-          EDH OBSCURITY INDEX CALCULATOR
-        </div>
-        One of these cards costs {1} more mana than the other.
-        Click on the card you think costs more!
+      <div>
         <div className="Scoreboard">
           Index: {display.index}
         </div>
@@ -40,6 +36,39 @@ class Manager extends Component {
       </div>
     )
   }
+}
+
+function Lookup(){
+  return (
+    <div>
+      <Select2
+        ref="lookup"
+        data={MTG.Data.getAllCards()}
+        options={{
+          placeholder: 'search by commander name',
+        }}
+      />
+    </div>
+  )
+}
+
+function MainView(){
+  return (
+    <div className="Manager">
+      <div className="Title">
+        EDH OBSCURITY INDEX CALCULATOR
+      </div>
+      <p>
+        Calculate exactly how hipster you are!
+      </p>
+      <p>
+        Idea courtesy of r/EDH user MagicalHacker
+        (<a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">thread</a>)
+      </p>
+      <Lookup />
+      <List />
+    </div>
+  )
 }
 
 function Loading(){
@@ -82,7 +111,7 @@ View.initApp = function(){
     .then(function(data) {
       MTG.Data.init(data);
       ReactDOM.render(
-        <Manager />,
+        <MainView />,
         document.getElementById('root')
       );
     });
