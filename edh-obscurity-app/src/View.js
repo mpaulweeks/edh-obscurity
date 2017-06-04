@@ -38,18 +38,30 @@ class List extends Component {
   }
 }
 
-function Lookup(){
-  return (
-    <div>
-      <Select2
-        // ref="lookup"
-        data={MTG.Data.getAllCards()}
-        options={{
-          placeholder: 'search by commander name',
-        }}
-      />
-    </div>
-  )
+class Lookup extends Component {
+  constructor(){
+    super();
+    this.state = {
+      data: MTG.Data.getAllCards(),
+    };
+  }
+  cbChange(arg){
+    MTG.temp = this;
+  }
+  render() {
+    return (
+      <div>
+        <Select2
+          // ref="lookup"
+          data={this.state.data}
+          onChange={this.cbChange}
+          options={{
+            placeholder: 'search by commander name',
+          }}
+        />
+      </div>
+    )
+  }
 }
 
 function MainView(){
