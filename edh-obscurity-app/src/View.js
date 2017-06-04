@@ -42,7 +42,7 @@ function Lookup(){
   return (
     <div>
       <Select2
-        ref="lookup"
+        // ref="lookup"
         data={MTG.Data.getAllCards()}
         options={{
           placeholder: 'search by commander name',
@@ -64,6 +64,9 @@ function MainView(){
       <p>
         Idea courtesy of r/EDH user MagicalHacker
         (<a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">thread</a>)
+      </p>
+      <p>
+        Deck counts last updated: {MTG.ViewHelper.getUpdated()}
       </p>
       <Lookup />
       <List />

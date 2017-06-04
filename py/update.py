@@ -1,4 +1,5 @@
 
+from datetime import datetime
 import json
 
 from crawler import crawl_edhrec
@@ -8,14 +9,17 @@ from s3 import upload_s3
 def generate_card_list():
     data_path = 'temp/edh_deck_counts.json'
 
-    out = crawl_edhrec()
+    json_out = {
+        'counts': crawl_edhrec(),
+        'updated': datetime.utcnow().isoformat(),
+    }
 
-    with open(data_path, 'wb') as f:
+    with open(data_path, 'wb') as temp_file:
         json.dump(
-            out,
-            f,
+            json_out,
+            temp_file,
             # indent=4,
-            sort_keys=True,
+            # sort_keys=True,
             separators=(',', ':')
         )
     upload_s3(data_path)

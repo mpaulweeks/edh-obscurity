@@ -16,15 +16,16 @@ MTG.Calc.calculateIndex = function(){
 
 // Stateful container of card info
 MTG.Data = {};
-MTG.Data.init = function(edhrecCounts){
+MTG.Data.init = function(rawData){
+  const rawCounts = rawData.counts;
   let lookup = {};
-  edhrecCounts.forEach(function (tuple){
+  rawCounts.forEach(function (tuple){
     const cardName = tuple[0];
     const cardCount = tuple[1];
     lookup[cardName] = cardCount;
   });
-  let maxCardName = edhrecCounts[0][0];
-  edhrecCounts.forEach(function (tuple){
+  let maxCardName = rawCounts[0][0];
+  rawCounts.forEach(function (tuple){
     const cardName = tuple[0];
     const cardCount = tuple[1];
     if (cardCount > lookup[maxCardName]){
@@ -32,7 +33,7 @@ MTG.Data.init = function(edhrecCounts){
     }
   });
 
-  MTG.Data.RawCounts = edhrecCounts;
+  MTG.Data.RawData = rawData;
   MTG.Data.Counts = lookup;
   MTG.Data.MaxCardName = maxCardName;
   MTG.Data.Current = {};
@@ -77,6 +78,9 @@ MTG.ViewHelper.getCurrent = function(){
     index: MTG.Calc.calculateIndex(),
     cards: cards
   }
+}
+MTG.ViewHelper.getUpdated = function(){
+  return new Date(MTG.Data.RawData.updated).toLocaleDateString();
 }
 
 MTG.Public = function(){
