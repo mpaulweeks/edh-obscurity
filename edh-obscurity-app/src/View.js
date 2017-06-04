@@ -9,13 +9,11 @@ const Card = function(props){
     display,
   } = props
   return (
-    <div>
-      <div>
-        {display.name}
-      </div>
-      <div>
-        {display.count} / {display.maxCount}
-      </div>
+    <div className="row Card">
+      <div className="col-md-6">{display.name}</div>
+      <div className="col-md-2">{display.count}</div>
+      <div className="col-md-2 Index-Score">{display.index}</div>
+      <div className="col-md-2 Remove clickable" onClick={display.onRemove}></div>
     </div>
   )
 }
@@ -26,15 +24,20 @@ class List extends Component {
       display,
     } = this.props
     return (
-      <div>
-        <div className="Scoreboard">
-          Index: {display.index}
-        </div>
-        <div className="Card-Container">
+      <div className="row Section">
+        <div className="col-md-3"></div>
+        <div className="col-md-6">
+          <div className="row Card Card-Header">
+            <div className="col-md-6">Commander</div>
+            <div className="col-md-2">Decks</div>
+            <div className="col-md-2">Index</div>
+            <div className="col-md-2">Remove</div>
+          </div>
           {display.cards.map(function(cardDisplay) {
             return <Card key={cardDisplay.name} display={cardDisplay} />
           })}
         </div>
+        <div className="col-md-3"></div>
       </div>
     )
   }
@@ -44,6 +47,7 @@ class MainView extends Component {
   constructor(){
     super();
     this.onChange = this.onChange.bind(this);
+    this.onRemove = this.onRemove.bind(this);
     let options = [];
     MTG.Data.getAllCards().forEach(function (cardName){
       options.push({ value: cardName, label: cardName })
@@ -51,20 +55,27 @@ class MainView extends Component {
     this.state = {
       options: options,
       updated: MTG.ViewHelper.getUpdated(),
-      current: MTG.ViewHelper.getCurrent(),
+      current: MTG.ViewHelper.getCurrent(this.onRemove),
     };
   }
   onChange(arg){
     MTG.temp = arg.value;
     MTG.Data.addCard(arg.value);
     var newState = {
-      current: MTG.ViewHelper.getCurrent(),
+      current: MTG.ViewHelper.getCurrent(this.onRemove),
+    };
+    this.setState(newState);
+  }
+  onRemove(cardName){
+    MTG.Data.removeCard(cardName);
+    var newState = {
+      current: MTG.ViewHelper.getCurrent(this.onRemove),
     };
     this.setState(newState);
   }
   render() {
     return (
-      <div className="Manager">
+      <div className="container Manager">
         <div className="Title">
           EDH OBSCURITY INDEX CALCULATOR
         </div>
@@ -74,15 +85,24 @@ class MainView extends Component {
         <p>
           Idea courtesy of r/EDH user MagicalHacker
           (<a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">thread</a>)
+           Made possible thanks to <a target="_blank" href="https://edhrec.com/">edhrec.com</a>
         </p>
         <p>
-          Deck counts last updated: {this.state.updated}
+          Data last updated: {this.state.updated}
         </p>
-        <div className="Select-Holder">
+        <div className="Section Total-Index">
+          Overall Index: <span className="Index-Score">{this.state.current.index}</span>
+        </div>
+        <div className="row Section">
+          <div className="col-md-3"></div>
           <Select
+            className="col-md-6"
             options={this.state.options}
             onChange={this.onChange}
+            autofocus
+            placeholder="Type in Commander name..."
           />
+          <div className="col-md-3"></div>
         </div>
         <List display={this.state.current}/>
       </div>

@@ -13,6 +13,10 @@ MTG.Calc.calculateIndex = function(){
   });
   return (1 - (sum / percents.length)).toFixed(2) * 100;
 };
+MTG.Calc.calculateCardIndex = function(cardName){
+  const percent = MTG.Data.getCount(cardName) / MTG.Data.getMaxCount();
+  return (1 - percent).toFixed(2) * 100;
+}
 
 // Stateful container of card info
 MTG.Data = {};
@@ -37,12 +41,9 @@ MTG.Data.init = function(rawData){
   MTG.Data.Counts = lookup;
   MTG.Data.MaxCardName = maxCardName;
   MTG.Data.Current = {};
-
-  MTG.Data.addCard('Phelddagrif');
-  MTG.Data.addCard('Dragonlord Silumgar');
 }
 MTG.Data.getAllCards = function(){
-  return Object.keys(MTG.Data.Counts);
+  return Object.keys(MTG.Data.Counts).sort();
 }
 MTG.Data.getCount = function(cardName){
   return MTG.Data.Counts[cardName];
@@ -66,16 +67,21 @@ MTG.ViewHelper.getCard = function(cardName){
   return {
     name: cardName,
     count: MTG.Data.getCount(cardName),
+    index: MTG.Calc.calculateCardIndex(cardName),
     maxCount: MTG.Data.getMaxCount()
   }
 }
-MTG.ViewHelper.getCurrent = function(){
+MTG.ViewHelper.getCurrent = function(onRemove){
   let cards = [];
   MTG.Data.getCurrent().forEach(function(cardName){
-    cards.push(MTG.ViewHelper.getCard(cardName));
+    let cardDisplay = MTG.ViewHelper.getCard(cardName);
+    cardDisplay.onRemove = function(){
+      onRemove(cardName);
+    };
+    cards.push(cardDisplay);
   });
   return {
-    index: MTG.Calc.calculateIndex(),
+    index: MTG.Calc.calculateIndex() || '??',
     cards: cards
   }
 }
