@@ -8,6 +8,5 @@ https://github.com/JedWatson/react-select
 
 ## todo
 
-- fix css
-- each commander has an X for removal
 - share-able urls by b64 encoding all commander names?
+  - https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding
