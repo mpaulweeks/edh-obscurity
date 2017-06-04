@@ -63,6 +63,13 @@ MTG.Data.getCurrent = function(){
 
 // ViewHelper is stateless funcs for Views
 MTG.ViewHelper = {};
+MTG.ViewHelper.compareCards = function(a,b) {
+  if (a.count < b.count)
+    return -1;
+  if (a.count > b.count)
+    return 1;
+  return 0;
+}
 MTG.ViewHelper.getCard = function(cardName){
   return {
     name: cardName,
@@ -82,7 +89,7 @@ MTG.ViewHelper.getCurrent = function(onRemove){
   });
   return {
     index: MTG.Calc.calculateIndex() || '??',
-    cards: cards
+    cards: cards.sort(MTG.ViewHelper.compareCards).reverse()
   }
 }
 MTG.ViewHelper.getUpdated = function(){

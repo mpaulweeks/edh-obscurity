@@ -80,12 +80,13 @@ class MainView extends Component {
           EDH OBSCURITY INDEX CALCULATOR
         </div>
         <p>
-          Calculate exactly how hipster you are!
+          Created by <a target="_blank" href="https://twitter.com/mpaulweeks">@mpaulweeks</a>
         </p>
         <p>
-          Idea courtesy of r/EDH user MagicalHacker
-          (<a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">thread</a>)
-           Made possible thanks to <a target="_blank" href="https://edhrec.com/">edhrec.com</a>
+          Original idea from a <a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">r/EDH thread</a> by <a target="_blank" href="https://www.reddit.com/user/MagicalHacker">MagicalHacker</a>
+        </p>
+        <p>
+          Made possible thanks to <a target="_blank" href="https://edhrec.com/">edhrec.com</a>
         </p>
         <p>
           Data last updated: {this.state.updated}
