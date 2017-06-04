@@ -43,12 +43,13 @@ MTG.Data.init = function(rawData){
   MTG.Data.Current = {};
 
   // load url params here
-  const param = MTG.ViewHelper.readUrlParam('c');
+  const param = MTG.Data.readUrlParam('c');
   if(param){
     MTG.Data.decodeCards(param).forEach(function (cardName){
       MTG.Data.addCard(cardName);
     });
   }
+  window.history.replaceState({}, "", '?');
 }
 MTG.Data.getAllCards = function(){
   return Object.keys(MTG.Data.Counts).sort();
@@ -61,11 +62,9 @@ MTG.Data.getMaxCount = function(cardName){
 }
 MTG.Data.addCard = function(cardName){
   MTG.Data.Current[cardName] = true;
-  MTG.ViewHelper.setUrlParams();
 }
 MTG.Data.removeCard = function(cardName){
   delete MTG.Data.Current[cardName];
-  MTG.ViewHelper.setUrlParams();
 }
 MTG.Data.getCurrent = function(){
   return Object.keys(MTG.Data.Current);
@@ -79,6 +78,28 @@ MTG.Data.decodeCards = function(encoded){
   const serialized = window.atob(encoded);
   const cardNames = serialized.split('|');
   return cardNames;
+}
+MTG.Data.readUrlParam = function(paramName, asList){
+  asList = asList || false;
+  var vars = {};
+  var q = document.URL.split('?')[1];
+  if(q !== undefined){
+    q = q.split('&');
+    for(var i = 0; i < q.length; i++){
+      var param = q[i].split('=');
+      var name = param[0];
+      var value = param[1];
+      vars[name] = vars[name] || [];
+      vars[name].push(value);
+    }
+  }
+  if (vars.hasOwnProperty(paramName)){
+    if (vars[paramName].length === 1 && !asList){
+      return vars[paramName][0];
+    }
+    return vars[paramName];
+  }
+  return null;
 }
 
 // ViewHelper is stateless funcs for Views
@@ -112,6 +133,7 @@ MTG.ViewHelper.getCurrent = function(onRemove){
     index = '??';
   }
   return {
+    permalink: MTG.ViewHelper.generatePermalink(),
     index: index,
     cards: cards.sort(MTG.ViewHelper.compareCards).reverse()
   }
@@ -119,36 +141,12 @@ MTG.ViewHelper.getCurrent = function(onRemove){
 MTG.ViewHelper.getUpdated = function(){
   return new Date(MTG.Data.RawData.updated).toLocaleDateString();
 }
-MTG.ViewHelper.readUrlParam = function(paramName, asList){
-  asList = asList || false;
-  var vars = {};
-  var q = document.URL.split('?')[1];
-  if(q !== undefined){
-    q = q.split('&');
-    for(var i = 0; i < q.length; i++){
-      var param = q[i].split('=');
-      var name = param[0];
-      var value = param[1];
-      vars[name] = vars[name] || [];
-      vars[name].push(value);
-    }
-  }
-  if (vars.hasOwnProperty(paramName)){
-    if (vars[paramName].length === 1 && !asList){
-      return vars[paramName][0];
-    }
-    return vars[paramName];
-  }
-  return null;
-}
-MTG.ViewHelper.setUrlParams = function(){
+MTG.ViewHelper.generatePermalink = function(){
   const cardData = MTG.Data.encodeCurrent();
   const params = "?c=" + (cardData || '');
-  window.history.replaceState({}, "", params);
-
-  // const location = window.location;
-  // const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-  // const shareUrl = baseUrl + params;
+  const location = window.location;
+  const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+  return baseUrl + params;
 }
 
 MTG.Public = function(){

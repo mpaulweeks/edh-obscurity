@@ -98,6 +98,9 @@ class MainView extends Component {
           <p>
             the higher the percent, the more hip you are
           </p>
+          <p>
+            <a href={this.state.current.permalink}>permalink to these Commanders</a>
+          </p>
         </div>
         <div className="row Section">
           <div className="col-md-3"></div>
