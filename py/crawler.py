@@ -54,7 +54,7 @@ def crawl_commanders_page(page_slug):
         card_name = container.find(class_='nwname').get_text().strip()
         card_desc = container.find(class_='nwdesc').get_text().strip()
         if 'of' not in card_desc:
-            card_count = card_desc.split(' ')[0]
+            card_count = int(card_desc.split(' ')[0])
             counts.append([card_name, card_count])
     return counts
 
