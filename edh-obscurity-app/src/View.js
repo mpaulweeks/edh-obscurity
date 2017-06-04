@@ -46,6 +46,21 @@ class List extends Component {
   }
 }
 
+const InfoView = function(){
+  return (
+    <div>
+      <div id="info-btn">about</div>
+      <div id="info-overlay">
+        <div id="text">
+          <h1>
+            text text text text text text text text text text
+          </h1>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 class MainView extends Component {
   constructor(){
     super();
@@ -79,6 +94,7 @@ class MainView extends Component {
   render() {
     return (
       <div className="container Manager">
+        <InfoView />
         <div className="Title">
           EDH Obscurity Index Calculator
         </div>
@@ -169,6 +185,7 @@ View.initApp = function(){
         <MainView />,
         document.getElementById('root')
       );
+      MTG.ViewHelper.init();
     });
 };
 

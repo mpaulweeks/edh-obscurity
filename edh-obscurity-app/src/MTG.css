@@ -37,3 +37,54 @@
 .Remove::after {
   content: "\2717";
 }
+
+#info-btn {
+  width: 38px;
+  height: 37px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 9;
+  top: 16px;
+  right: 16px;
+  /*background: url("../src/cachemonet.png");*/
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+#info-overlay {
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 100%;
+  top: 0px;
+  position: absolute;
+  z-index: 6;
+  text-align: center;
+  -webkit-transition: opacity 0.2s ease-out;
+  -moz-transition: opacity 0.2s ease-out;
+  -ms-transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
+  opacity: 0;
+}
+#info-overlay.show {
+  opacity: 1;
+  left: 0px;
+}
+#info-overlay #text {
+  position: absolute;
+  width: 70%;
+  height: 80%;
+  display: table;
+  top: 0px;
+  left: 15%;
+}
+#info-overlay #text h1 {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 26px;
+  line-height: 40px;
+}
+#info-overlay #text h1 a {
+  color: #000;
+  text-decoration: none;
+  border-bottom: 2px solid #0000FF;
+}
