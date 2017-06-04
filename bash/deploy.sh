@@ -1,4 +1,4 @@
-cd quiz-app
+cd edh-obscurity-app
 
 npm run build
 mkdir ../docs
