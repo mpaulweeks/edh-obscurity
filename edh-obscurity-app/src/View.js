@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Select2 from 'react-select2-wrapper';
+import Select from 'react-select';
 import MTG from './MTG';
 import './MTG.css';
 
@@ -22,7 +22,9 @@ const Card = function(props){
 
 class List extends Component {
   render() {
-    const display = MTG.ViewHelper.getCurrent();
+    const {
+      display,
+    } = this.props
     return (
       <div>
         <div className="Scoreboard">
@@ -38,52 +40,54 @@ class List extends Component {
   }
 }
 
-class Lookup extends Component {
+class MainView extends Component {
   constructor(){
     super();
+    this.onChange = this.onChange.bind(this);
+    let options = [];
+    MTG.Data.getAllCards().forEach(function (cardName){
+      options.push({ value: cardName, label: cardName })
+    })
     this.state = {
-      data: MTG.Data.getAllCards(),
+      options: options,
+      updated: MTG.ViewHelper.getUpdated(),
+      current: MTG.ViewHelper.getCurrent(),
     };
   }
-  cbChange(arg){
-    MTG.temp = this;
+  onChange(arg){
+    MTG.temp = arg.value;
+    MTG.Data.addCard(arg.value);
+    var newState = {
+      current: MTG.ViewHelper.getCurrent(),
+    };
+    this.setState(newState);
   }
   render() {
     return (
-      <div>
-        <Select2
-          // ref="lookup"
-          data={this.state.data}
-          onChange={this.cbChange}
-          options={{
-            placeholder: 'search by commander name',
-          }}
-        />
+      <div className="Manager">
+        <div className="Title">
+          EDH OBSCURITY INDEX CALCULATOR
+        </div>
+        <p>
+          Calculate exactly how hipster you are!
+        </p>
+        <p>
+          Idea courtesy of r/EDH user MagicalHacker
+          (<a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">thread</a>)
+        </p>
+        <p>
+          Deck counts last updated: {this.state.updated}
+        </p>
+        <div className="Select-Holder">
+          <Select
+            options={this.state.options}
+            onChange={this.onChange}
+          />
+        </div>
+        <List display={this.state.current}/>
       </div>
     )
   }
-}
-
-function MainView(){
-  return (
-    <div className="Manager">
-      <div className="Title">
-        EDH OBSCURITY INDEX CALCULATOR
-      </div>
-      <p>
-        Calculate exactly how hipster you are!
-      </p>
-      <p>
-        Idea courtesy of r/EDH user MagicalHacker
-        (<a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">thread</a>)
-      </p>
-      <p>
-        Deck counts last updated: {MTG.ViewHelper.getUpdated()}
-      </p>
-      <Lookup />
-      <List />
-    </div>
-  )
 }
 
 function Loading(){
