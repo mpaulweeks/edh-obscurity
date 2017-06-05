@@ -11,4 +11,4 @@ Original idea from [r/EDH](https://www.reddit.com/r/EDH/comments/6e79ai/whats_yo
 
 ## todo
 
-- change remove buttons
+- mobile experience
