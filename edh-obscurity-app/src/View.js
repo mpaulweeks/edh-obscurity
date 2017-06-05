@@ -13,10 +13,11 @@ const Card = function(props){
   } = props
   return (
     <div className="row Card">
-      <div className="col-md-6">{display.name}</div>
-      <div className="col-md-2">{display.count}</div>
+      <div className="col-md-9">{display.name}</div>
       <div className="col-md-2 Index-Score">{display.index}</div>
-      <div className="col-md-2 Remove clickable" onClick={display.onRemove}></div>
+      <div className="col-md-1">
+        <div className="btn btn-default btn-xs" onClick={display.onRemove}>X</div>
+      </div>
     </div>
   )
 }
@@ -31,10 +32,9 @@ class List extends Component {
         <div className="col-md-3"></div>
         <div className="col-md-6">
           <div className="row Card Card-Header">
-            <div className="col-md-6">Commander</div>
-            <div className="col-md-2">Decks</div>
+            <div className="col-md-9">Commander</div>
             <div className="col-md-2">Index</div>
-            <div className="col-md-2">Remove</div>
+            <div className="col-md-1"></div>
           </div>
           {display.cards.map(function(cardDisplay) {
             return <Card key={cardDisplay.name} display={cardDisplay} />
@@ -62,10 +62,11 @@ class InfoView extends Component {
   }
   render(){
     const btnClass = this.state.visible ? 'visible' : '';
+    const btnText = this.state.visible ? 'close' : 'about';
     return (
       <div>
         <div id="info-btn" onClick={this.toggleInfo} className={btnClass}>
-          about
+          {btnText}
         </div>
         {this.state.visible &&
           <div id="info-overlay">
@@ -126,14 +127,14 @@ class MainView extends Component {
         </div>
         <div className="Section">
           <p>
-            Are you a commander hipster?
+            Are you a Commander hipster?
             <br/>
             Using information from <a target="_blank" href="https://edhrec.com/">edhrec.com</a>, we can calculate the exact obscurity of your tastes.
             <br/>
-            The higher the percent, the more unique your taste in commanders!
+            The higher the percent, the more unique your taste in Commanders!
           </p>
           <div className="Total-Index">
-            Average Index: <span className="Index-Score">{this.state.current.index}</span>
+            Average Obscurity Index: <span className="Index-Score">{this.state.current.index}</span>
           </div>
           <p>
           </p>
@@ -151,15 +152,18 @@ class MainView extends Component {
         </div>
         <List display={this.state.current}/>
         {this.state.current.cards.length > 0 &&
-          <p>
-            Want to share this list with someone?
-            <br/>
-            Click this button to copy the link to your clipboard:
-            <br/>
-            <ClipboardButton className="btn btn-default" data-clipboard-text={this.state.current.permalink}>
-              Copy Permalink to Clipboard
-            </ClipboardButton>
-          </p>
+          <div className="Section">
+            <p>
+              Want to share this list with someone?
+              <br/>
+              Click this button to copy the link to your clipboard:
+            </p>
+            <p>
+              <ClipboardButton className="btn btn-default" data-clipboard-text={this.state.current.permalink}>
+                Copy Permalink to Clipboard
+              </ClipboardButton>
+            </p>
+          </div>
         }
       </div>
     )

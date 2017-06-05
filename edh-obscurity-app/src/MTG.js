@@ -50,6 +50,10 @@ MTG.Data.init = function(rawData){
     });
   }
   window.history.replaceState({}, "", '?');
+
+  // testing
+  MTG.Data.addCard('Arashi, the Sky Asunder');
+  MTG.Data.addCard('Aboshan, Cephalid Emperor');
 }
 MTG.Data.getAllCards = function(){
   return Object.keys(MTG.Data.Counts).sort();
@@ -105,9 +109,9 @@ MTG.Data.readUrlParam = function(paramName, asList){
 // ViewHelper is stateless funcs for Views
 MTG.ViewHelper = {};
 MTG.ViewHelper.compareCards = function(a,b) {
-  if (a.count < b.count)
+  if (a.percent < b.percent)
     return -1;
-  if (a.count > b.count)
+  if (a.percent > b.percent)
     return 1;
   return 0;
 }
@@ -135,7 +139,7 @@ MTG.ViewHelper.getCurrent = function(onRemove){
   return {
     permalink: MTG.ViewHelper.generatePermalink(),
     index: index,
-    cards: cards.sort(MTG.ViewHelper.compareCards).reverse()
+    cards: cards.sort(MTG.ViewHelper.compareCards)
   }
 }
 MTG.ViewHelper.getUpdated = function(){
