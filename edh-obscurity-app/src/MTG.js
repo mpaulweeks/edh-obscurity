@@ -1,4 +1,3 @@
-import $ from 'jquery';
 
 const MTG = {};
 
@@ -105,13 +104,6 @@ MTG.Data.readUrlParam = function(paramName, asList){
 
 // ViewHelper is stateless funcs for Views
 MTG.ViewHelper = {};
-MTG.ViewHelper.init = function(){
-  function toggleInfo(){
-    $("#info-overlay").toggleClass("show");
-    $("#info-btn").toggleClass("show");
-  }
-  $("#info-btn").click(toggleInfo);
-}
 MTG.ViewHelper.compareCards = function(a,b) {
   if (a.count < b.count)
     return -1;

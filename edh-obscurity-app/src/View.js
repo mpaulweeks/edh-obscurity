@@ -46,19 +46,38 @@ class List extends Component {
   }
 }
 
-const InfoView = function(){
-  return (
-    <div>
-      <div id="info-btn">about</div>
-      <div id="info-overlay">
-        <div id="text">
-          <h1>
-            text text text text text text text text text text
-          </h1>
+class InfoView extends Component {
+  constructor(){
+    super();
+    this.toggleInfo = this.toggleInfo.bind(this);
+    this.state = {
+      visible: false,
+    }
+  }
+  toggleInfo(){
+    this.setState({
+      visible: !this.state.visible,
+    })
+  }
+  render(){
+    const btnClass = this.state.visible ? 'visible' : '';
+    return (
+      <div>
+        <div id="info-btn" onClick={this.toggleInfo} className={btnClass}>
+          about
         </div>
+        {this.state.visible &&
+          <div id="info-overlay">
+            <div id="text">
+              <h1>
+                text text text text text text text text text text
+              </h1>
+            </div>
+          </div>
+        }
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 class MainView extends Component {
@@ -185,7 +204,6 @@ View.initApp = function(){
         <MainView />,
         document.getElementById('root')
       );
-      MTG.ViewHelper.init();
     });
 };
 
