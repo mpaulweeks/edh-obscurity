@@ -129,7 +129,7 @@ class MainView extends Component {
           <p>
             Are you a Commander hipster?
             <br/>
-            Using information from <a target="_blank" href="https://edhrec.com/">edhrec.com</a>, we can calculate the exact obscurity of your tastes.
+            Using information from <a target="_blank" href="https://edhrec.com/">edhrec.com</a>, we can calculate the <a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">exact obscurity</a> of your tastes.
             <br/>
             The higher the percent, the more unique your taste in Commanders!
           </p>

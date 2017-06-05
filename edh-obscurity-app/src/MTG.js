@@ -105,9 +105,9 @@ MTG.Data.readUrlParam = function(paramName, asList){
 // ViewHelper is stateless funcs for Views
 MTG.ViewHelper = {};
 MTG.ViewHelper.compareCards = function(a,b) {
-  if (a.percent < b.percent)
+  if (a.index < b.index)
     return -1;
-  if (a.percent > b.percent)
+  if (a.index > b.index)
     return 1;
   return 0;
 }
@@ -135,7 +135,7 @@ MTG.ViewHelper.getCurrent = function(onRemove){
   return {
     permalink: MTG.ViewHelper.generatePermalink(),
     index: index,
-    cards: cards.sort(MTG.ViewHelper.compareCards)
+    cards: cards.sort(MTG.ViewHelper.compareCards).reverse()
   }
 }
 MTG.ViewHelper.getUpdated = function(){
