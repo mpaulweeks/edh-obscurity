@@ -11,5 +11,4 @@ Original idea from [r/EDH](https://www.reddit.com/r/EDH/comments/6e79ai/whats_yo
 
 ## todo
 
-- add About screen
 - change remove buttons

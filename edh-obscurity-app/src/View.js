@@ -51,6 +51,7 @@ class InfoView extends Component {
     super();
     this.toggleInfo = this.toggleInfo.bind(this);
     this.state = {
+      updated: MTG.ViewHelper.getUpdated(),
       visible: false,
     }
   }
@@ -68,11 +69,18 @@ class InfoView extends Component {
         </div>
         {this.state.visible &&
           <div id="info-overlay">
-            <div id="text">
-              <h1>
-                text text text text text text text text text text
-              </h1>
-            </div>
+            <p>
+              Created by <a target="_blank" href="https://twitter.com/mpaulweeks">@mpaulweeks</a>
+            </p>
+            <p>
+              Original idea from a <a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">r/EDH thread</a> by <a target="_blank" href="https://www.reddit.com/user/MagicalHacker">MagicalHacker</a>
+            </p>
+            <p>
+              Made possible thanks to <a target="_blank" href="https://edhrec.com/">edhrec.com</a>
+            </p>
+            <p>
+              Data last updated: {this.state.updated}
+            </p>
           </div>
         }
       </div>
@@ -91,7 +99,6 @@ class MainView extends Component {
     })
     this.state = {
       options: options,
-      updated: MTG.ViewHelper.getUpdated(),
       current: MTG.ViewHelper.getCurrent(this.onRemove),
     };
   }
@@ -117,24 +124,18 @@ class MainView extends Component {
         <div className="Title">
           EDH Obscurity Index Calculator
         </div>
-        <p>
-          Created by <a target="_blank" href="https://twitter.com/mpaulweeks">@mpaulweeks</a>
-        </p>
-        <p>
-          Original idea from a <a target="_blank" href="https://www.reddit.com/r/EDH/comments/6e79ai/whats_your_obscurity_index/">r/EDH thread</a> by <a target="_blank" href="https://www.reddit.com/user/MagicalHacker">MagicalHacker</a>
-        </p>
-        <p>
-          Made possible thanks to <a target="_blank" href="https://edhrec.com/">edhrec.com</a>
-        </p>
-        <p>
-          Data last updated: {this.state.updated}
-        </p>
         <div className="Section">
+          <p>
+            Are you a commander hipster?
+            <br/>
+            Using information from <a target="_blank" href="https://edhrec.com/">edhrec.com</a>, we can calculate the exact obscurity of your tastes.
+            <br/>
+            The higher the percent, the more unique your taste in commanders!
+          </p>
           <div className="Total-Index">
-            Overall Index: <span className="Index-Score">{this.state.current.index}</span>
+            Average Index: <span className="Index-Score">{this.state.current.index}</span>
           </div>
           <p>
-            the higher the percent, the more hip you are
           </p>
         </div>
         <div className="row Section">
@@ -151,8 +152,12 @@ class MainView extends Component {
         <List display={this.state.current}/>
         {this.state.current.cards.length > 0 &&
           <p>
+            Want to share this list with someone?
+            <br/>
+            Click this button to copy the link to your clipboard:
+            <br/>
             <ClipboardButton className="btn btn-default" data-clipboard-text={this.state.current.permalink}>
-              Copy permalink to Clipboard
+              Copy Permalink to Clipboard
             </ClipboardButton>
           </p>
         }

@@ -40,10 +40,10 @@
 #info-btn {
   position: absolute;
   width: 60px;
-  cursor: pointer;
-  z-index: 2;
   top: 16px;
   right: 16px;
+  z-index: 2;
+  cursor: pointer;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 4px;
@@ -56,33 +56,17 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  top: 0px;
   left: 0px;
-  top: 0px;
-  background: #000000;
   z-index: 1;
+  background: #000000;
   opacity: 0.9;
-  text-align: center;
-  -webkit-transition: opacity 0.2s ease-out;
-  -moz-transition: opacity 0.2s ease-out;
-  -ms-transition: opacity 0.2s ease-out;
-  transition: opacity 0.2s ease-out;
+  color: #eee;
+  font-size: 24px;
+  padding-top: 80px;
 }
-#info-overlay #text {
-  position: absolute;
-  width: 70%;
-  height: 80%;
-  display: table;
-  top: 0px;
-  left: 15%;
-}
-#info-overlay #text h1 {
-  display: table-cell;
-  vertical-align: middle;
-  font-size: 26px;
-  line-height: 40px;
-}
-#info-overlay #text h1 a {
-  color: #000;
+#info-overlay a {
+  color: #eee;
   text-decoration: none;
-  border-bottom: 2px solid #0000FF;
+  border-bottom: 2px solid #eee;
 }
