@@ -50,10 +50,6 @@ MTG.Data.init = function(rawData){
     });
   }
   window.history.replaceState({}, "", '?');
-
-  // testing
-  MTG.Data.addCard('Arashi, the Sky Asunder');
-  MTG.Data.addCard('Aboshan, Cephalid Emperor');
 }
 MTG.Data.getAllCards = function(){
   return Object.keys(MTG.Data.Counts).sort();
