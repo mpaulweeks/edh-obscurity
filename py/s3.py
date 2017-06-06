@@ -4,7 +4,7 @@ import boto3
 
 
 def _connect_to_bucket():
-    with open("local/s3.json") as jsonFile:
+    with open("local/cred.json") as jsonFile:
         keys = json.load(jsonFile)
     session = boto3.Session(
         aws_access_key_id=keys['aws_access_key_id'],

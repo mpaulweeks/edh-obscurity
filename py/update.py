@@ -9,7 +9,10 @@ from s3 import upload_s3
 def generate_card_list():
     data_path = 'temp/edh_deck_counts.json'
 
+    with open("local/cred.json") as jsonFile:
+        keys = json.load(jsonFile)
     json_out = {
+        'bitly': keys['bitly_access_token'],
         'counts': crawl_edhrec(),
         'updated': datetime.utcnow().isoformat(),
     }
