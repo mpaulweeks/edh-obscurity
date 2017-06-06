@@ -52,7 +52,7 @@ MTG.Data.init = function(rawData){
   window.history.replaceState({}, "", '?');
 
   // testing todo
-  MTG.Data.addCard('Adamaro, First to Desire')
+  // MTG.Data.addCard('Adamaro, First to Desire');
 }
 MTG.Data.getAllCards = function(){
   return Object.keys(MTG.Data.Counts).sort();
