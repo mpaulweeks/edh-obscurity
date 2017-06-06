@@ -12,7 +12,3 @@ Original idea from [r/EDH](https://www.reddit.com/r/EDH/comments/6e79ai/whats_yo
 ## todo
 
 - mobile experience
-- link to source in info?
-  - cleanup READMEs
-- add README.md generation to deploy script:
-  - This was created programmatically. See the [deploy script](https://github.com/mpaulweeks/edh-obscurity/blob/master/bash/deploy.sh).
