@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import Select from 'react-select';
-import ClipboardButton from 'react-clipboard.js';
+// import ClipboardButton from 'react-clipboard.js';
 
 import MTG from './MTG';
 import './MTG.css';
@@ -92,6 +92,7 @@ class InfoView extends Component {
 class MainView extends Component {
   constructor(){
     super();
+    this.onBitly = this.onBitly.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onRemove = this.onRemove.bind(this);
     let options = [];
@@ -101,13 +102,24 @@ class MainView extends Component {
     this.state = {
       options: options,
       current: MTG.ViewHelper.getCurrent(this.onRemove),
+      bitly: null,
     };
+  }
+  onBitly(){
+    const comp = this;
+    MTG.ViewHelper.generateBitly(function(bitlyUrl){
+      console.log('callback with', bitlyUrl);
+      comp.setState({
+        bitly: bitlyUrl
+      });
+    })
   }
   onChange(arg){
     MTG.temp = arg.value;
     MTG.Data.addCard(arg.value);
     var newState = {
       current: MTG.ViewHelper.getCurrent(this.onRemove),
+      bitly: null,
     };
     this.setState(newState);
   }
@@ -115,6 +127,7 @@ class MainView extends Component {
     MTG.Data.removeCard(cardName);
     var newState = {
       current: MTG.ViewHelper.getCurrent(this.onRemove),
+      bitly: null,
     };
     this.setState(newState);
   }
@@ -156,13 +169,18 @@ class MainView extends Component {
             <p>
               Want to share this list with someone?
               <br/>
-              Click this button to copy the link to your clipboard:
+              Click this button to generate a link:
             </p>
-            <p>
-              <ClipboardButton className="btn btn-default" data-clipboard-text={this.state.current.permalink}>
-                Copy Permalink to Clipboard
-              </ClipboardButton>
-            </p>
+            {!this.state.bitly &&
+              <div className="btn btn-default" onClick={this.onBitly}>
+                  Generate Permalink
+              </div>
+            }
+            {this.state.bitly &&
+              <p className="Bitly">
+                {this.state.bitly}
+              </p>
+            }
           </div>
         }
       </div>

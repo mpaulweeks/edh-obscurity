@@ -50,6 +50,9 @@ MTG.Data.init = function(rawData){
     });
   }
   window.history.replaceState({}, "", '?');
+
+  // testing todo
+  MTG.Data.addCard('Adamaro, First to Desire')
 }
 MTG.Data.getAllCards = function(){
   return Object.keys(MTG.Data.Counts).sort();
@@ -133,7 +136,6 @@ MTG.ViewHelper.getCurrent = function(onRemove){
     index = '??';
   }
   return {
-    permalink: MTG.ViewHelper.generatePermalink(),
     index: index,
     cards: cards.sort(MTG.ViewHelper.compareCards).reverse()
   }
@@ -145,13 +147,31 @@ MTG.ViewHelper.generatePermalink = function(){
   const cardData = MTG.Data.encodeCurrent();
   const params = "?c=" + (cardData || '');
   const location = window.location;
-  const baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+  let baseUrl = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+  if (!baseUrl.includes('edh-obscurity')){
+    // must be developing locally
+    baseUrl = 'http://edh-obscurity.mpaulweeks.com'
+  }
   return baseUrl + params;
+}
+MTG.ViewHelper.generateBitly = function(callback){
+  const permalink = MTG.ViewHelper.generatePermalink();
+  const encodedLink = encodeURIComponent(permalink);
+  const accessToken = MTG.Data.RawData.bitly;
+  const bitlyUrl = `https://api-ssl.bitly.com/v3/shorten?access_token=${accessToken}&longUrl=${encodedLink}`;
+  fetch(bitlyUrl)
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(data) {
+      console.log(data);
+      callback(data.data.url);
+    });
 }
 
 MTG.Public = function(){
   return MTG;
 };
-window.MTG = MTG.Public();
+// window.MTG = MTG.Public();
 
 export default MTG;
