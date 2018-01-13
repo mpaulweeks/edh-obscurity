@@ -135,6 +135,7 @@ class MainView extends Component {
     return (
       <div className="container Manager">
         <InfoView />
+        <img height="50" src="edh.png" alt=""/>
         <div className="Title">
           EDH Obscurity Index Calculator
         </div>
