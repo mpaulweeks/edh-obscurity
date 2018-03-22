@@ -28,4 +28,5 @@ def generate_card_list():
     upload_s3(data_path)
 
 
-generate_card_list()
+if __name__ == "__main__":
+    generate_card_list()

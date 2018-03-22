@@ -1,8 +1,9 @@
 
-import requests
-from bs4 import BeautifulSoup
+import json
 
-EDHREC_BASE_URL = 'https://edhrec.com/commanders/%s/'
+import requests
+
+EDHREC_BASE_URL = 'https://edhrec.com/commanders/%s'
 COMMANDER_PAGE_SLUGS = frozenset([
     'w',
     'u',
@@ -46,16 +47,15 @@ def crawl_commanders_page(page_slug):
     if(req.status_code != 200):
         return
 
-    soup = BeautifulSoup(req.text, 'html.parser')
-
+    text = req.text
+    json_str = text.split('var json_dict = ')[1].split(';\n')[0]
+    json_obj = json.loads(json_str)
+    cards = json_obj['cardlists'][0]['cardviews']
     counts = []
-    card_containers = soup.find_all(class_='nw')
-    for container in card_containers:
-        card_name = container.find(class_='nwname').get_text().strip()
-        card_desc = container.find(class_='nwdesc').get_text().strip()
-        if 'of' not in card_desc:
-            card_count = int(card_desc.split(' ')[0])
-            counts.append([card_name, card_count])
+    for card in cards:
+        card_name = card['name']
+        card_count = int(card['label'].split(' ')[0])
+        counts.append([card_name, card_count])
     return counts
 
 
@@ -66,3 +66,7 @@ def crawl_edhrec():
     for card in counts:
         print(card)
     return counts
+
+
+if __name__ == "__main__":
+    print(crawl_commanders_page('b'))
