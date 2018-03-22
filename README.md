@@ -22,7 +22,7 @@ See `install/crontab` for how to config.
 
 To update React app
 ```
-./bash/deploy.sh
+./bash/deploy_react.sh
 ```
 
 To update the cronjob, push to master and changes will be pulled before the next scrape.
