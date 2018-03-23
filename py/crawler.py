@@ -48,7 +48,9 @@ def crawl_commanders_page(page_slug):
         return
 
     text = req.text
-    json_str = text.split('json_dict = ')[1].split('};')[0]
+    json_str = '{%s}' % (
+        text.split('json_dict = {')[1].split('};')[0]
+    )
     json_obj = json.loads(json_str)
     cards = json_obj['cardlists'][0]['cardviews']
     counts = []
