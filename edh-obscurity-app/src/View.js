@@ -14,7 +14,7 @@ const Card = function(props){
   return (
     <div className="row Card">
       <div className="col-md-9">{display.name}</div>
-      <div className="col-md-2 Index-Score">{display.index}</div>
+      <div className="col-md-2 Index-Score" title={display.count + ' decks'}>{display.index}</div>
       <div className="col-md-1">
         <div className="btn btn-default btn-xs" onClick={display.onRemove}>X</div>
       </div>
