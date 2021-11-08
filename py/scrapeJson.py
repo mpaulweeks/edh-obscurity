@@ -3,7 +3,7 @@ import json
 
 import requests
 
-EDHREC_BASE_URL = 'https://edhrec-json.s3.amazonaws.com/en/commanders/%s.json'
+EDHREC_BASE_URL = 'https://edhrec-json.s3.amazonaws.com/commanders/%s.json'
 
 COMMANDER_PAGE_SLUGS = frozenset([
     'w',
